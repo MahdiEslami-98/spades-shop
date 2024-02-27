@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        "vazir": ["Vazirmatn", ...defaultTheme.fontFamily.sans],
+        vazir: ["Vazirmatn", ...defaultTheme.fontFamily.sans],
       },
     },
   },
