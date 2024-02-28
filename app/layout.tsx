@@ -4,7 +4,7 @@ import MainLayout from "@/components/mainLayout";
 
 export const metadata: Metadata = {
   title: "فروشگاه اسپادز",
-  description: "",
+  description: "فروشگاه اینترنتی ساعت",
 };
 
 const RootLayout = ({
