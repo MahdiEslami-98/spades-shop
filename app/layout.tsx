@@ -15,8 +15,8 @@ const RootLayout = ({
   return (
     <html lang="en" dir="rtl">
       <body className="font-vazir">
-        {children}12313
         <MainLayout />
+        {children}
       </body>
     </html>
   );
