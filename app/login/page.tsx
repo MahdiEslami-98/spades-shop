@@ -1,19 +1,21 @@
 "use client";
+
+import loginService from "@/api/loginServices";
 import Button from "@/components/button";
 import Input from "@/components/input";
 import loginFormSchema, {
   LoginFormType,
 } from "@/utils/validations/loginFormValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { ILoginRes } from "@/types";
+import { useRouter } from "next/router";
 
 const LoginPage = () => {
-  const {} = useQuery({
-    queryKey: ["login"],
-    queryFn: () => {},
-  });
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -23,8 +25,28 @@ const LoginPage = () => {
     resolver: zodResolver(loginFormSchema),
   });
 
+  const { mutate: loginMutate, isSuccess } = useMutation({
+    mutationFn: (value: LoginFormType) => loginService(value),
+    onSuccess(data: ILoginRes) {
+      if (data.status === "success") {
+        const token = data.token;
+        const user = data?.data.user;
+        sessionStorage.set("access_token", token.accessToken);
+        sessionStorage.set("refresh_token", token.refreshToken);
+        sessionStorage.set("user_role", user.role);
+        localStorage.setItem("user_info", JSON.stringify(user));
+        if (user.role === "admin") {
+          router.push("/dashboard");
+        } else {
+          router.push("/");
+        }
+      } else if (data.status === "fail") {
+      }
+    },
+  });
+
   const loginFormSubmit = (value: LoginFormType) => {
-    console.log(value);
+    loginMutate(value);
   };
 
   return (

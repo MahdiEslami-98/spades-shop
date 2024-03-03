@@ -1,8 +1,8 @@
 "use server";
 
-import { LoginFormType } from "@/utils/validations/loginFormValidation";
+import { ILoginData, ILoginRes } from "@/types";
 
-const loginService = async (data: LoginFormType) => {
+const loginService = async (data: ILoginData): Promise<ILoginRes | any> => {
   try {
     const response = await fetch(process.env.BASE_URL + "/auth/login", {
       method: "POST",
@@ -11,10 +11,10 @@ const loginService = async (data: LoginFormType) => {
         "Content-Type": "application/json",
       },
     });
-    if (response.status !== "success") throw new Error(response.statusText);
+    if (!response.ok) throw new Error(response.statusText);
     return response.json();
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 
