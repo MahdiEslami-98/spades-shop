@@ -10,11 +10,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { ILoginRes } from "@/types";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
+import Spinner from "@/components/spinner";
 
 const LoginPage = () => {
   const router = useRouter();
+  const { toast } = useToast();
 
   const {
     register,
@@ -25,22 +27,34 @@ const LoginPage = () => {
     resolver: zodResolver(loginFormSchema),
   });
 
-  const { mutate: loginMutate, isSuccess } = useMutation({
+  const { mutate: loginMutate, isPending } = useMutation({
     mutationFn: (value: LoginFormType) => loginService(value),
-    onSuccess(data: ILoginRes) {
+    onSuccess(data) {
       if (data.status === "success") {
+        console.log(data);
         const token = data.token;
         const user = data?.data.user;
-        sessionStorage.set("access_token", token.accessToken);
-        sessionStorage.set("refresh_token", token.refreshToken);
-        sessionStorage.set("user_role", user.role);
+        sessionStorage.setItem("access_token", token.accessToken);
+        sessionStorage.setItem("refresh_token", token.refreshToken);
+        sessionStorage.setItem("user_role", user.role);
         localStorage.setItem("user_info", JSON.stringify(user));
-        if (user.role === "admin") {
+        if (user.role === "ADMIN") {
           router.push("/dashboard");
+          toast({
+            title: "✅ورود با موفقیت انجام شد",
+            description: "به پنل مدیریت خوش امدید",
+          });
         } else {
           router.push("/");
+          toast({
+            title: "✅ورود با موفقیت انجام شد",
+            description: "به فروشگاه خوش امدید",
+          });
         }
-      } else if (data.status === "fail") {
+      } else {
+        toast({
+          title: "❌" + data,
+        });
       }
     },
   });
@@ -55,7 +69,9 @@ const LoginPage = () => {
         className="flex flex-col gap-y-4 px-6 sm:px-8 md:px-12 lg:px-24 xl:px-40"
         onSubmit={handleSubmit(loginFormSubmit)}
       >
-        <h1 className="text-3xl font-bold">ورود به پنل مدیریت</h1>
+        <div>
+          <h1 className="text-3xl font-bold">ورود به پنل مدیریت</h1>
+        </div>
         <div className="mb-4 w-full">
           <Input
             placeholder="نام کاربری"
@@ -90,10 +106,11 @@ const LoginPage = () => {
         </div>
         <div>
           <Button
-            value={"ورود"}
             type="submit"
-            className="w-full rounded-xl bg-green-500 px-4 py-2"
-          />
+            className=" flex w-full items-end justify-center gap-x-4 rounded-xl bg-green-500 px-4 py-2 text-white"
+          >
+            ورود {isPending && <Spinner />}
+          </Button>
         </div>
       </form>
       <div className="mx-auto hidden md:block">

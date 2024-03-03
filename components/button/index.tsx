@@ -4,11 +4,7 @@ const Button = (
   props: ButtonHTMLAttributes<HTMLButtonElement>,
   ref: LegacyRef<HTMLButtonElement>,
 ) => {
-  return (
-    <button {...props} ref={ref}>
-      {props.value}
-    </button>
-  );
+  return <button {...props} ref={ref}></button>;
 };
 
 export default forwardRef(Button);

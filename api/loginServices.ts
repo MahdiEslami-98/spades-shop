@@ -1,5 +1,3 @@
-"use server";
-
 import { ILoginData, ILoginRes } from "@/types";
 
 const loginService = async (data: ILoginData): Promise<ILoginRes | any> => {
@@ -11,7 +9,7 @@ const loginService = async (data: ILoginData): Promise<ILoginRes | any> => {
         "Content-Type": "application/json",
       },
     });
-    if (!response.ok) throw new Error(response.statusText);
+    if (!response.ok) throw new Error("نام کاربری یا رمز عبور اشتباه است");
     return response.json();
   } catch (error) {
     return error;
