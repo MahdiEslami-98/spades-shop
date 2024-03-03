@@ -12,7 +12,7 @@ const baseApi = async <T>(
   options: AxiosRequestConfig,
 ): Promise<T> => {
   const response = await httpService(url, options);
-  return response as T;
+  return response.data as T;
 };
 
 const get = async <T>(

@@ -51,11 +51,12 @@ const LoginPage = () => {
             description: "به فروشگاه خوش امدید",
           });
         }
-      } else {
-        toast({
-          title: "❌" + data,
-        });
       }
+    },
+    onError() {
+      toast({
+        title: "❌نام کاربری یا رمز عبور اشتباه است",
+      });
     },
   });
 

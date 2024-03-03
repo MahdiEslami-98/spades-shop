@@ -1,19 +1,14 @@
 "use server";
 import { ILoginData, ILoginRes } from "@/types";
+import { post } from "./axiosInstance";
+import { AxiosError } from "axios";
 
 const loginService = async (data: ILoginData): Promise<ILoginRes | any> => {
   try {
-    const response = await fetch(process.env.BASE_URL + "/auth/login", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!response.ok) throw new Error("نام کاربری یا رمز عبور اشتباه است");
-    return response.json();
+    const response: ILoginRes = await post("/auth/login", data);
+    return response;
   } catch (error) {
-    return error;
+    console.log((error as AxiosError).message);
   }
 };
 

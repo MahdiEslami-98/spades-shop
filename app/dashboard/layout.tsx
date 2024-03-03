@@ -21,10 +21,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
           >
             بازگشت به صفحه اصلی
           </Link>
-          <button
-            onClick={logOutHandler}
-            className="rounded-2xl bg-black px-4 py-2 text-white"
-          >
+          <button className="rounded-2xl bg-black px-4 py-2 text-white">
             خروج
           </button>
         </div>
