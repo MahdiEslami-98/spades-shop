@@ -12,6 +12,9 @@ const config: Config = {
       fontFamily: {
         vazir: ["Vazirmatn", ...defaultTheme.fontFamily.sans],
       },
+      backgroundImage: {
+        log1: "url('/3Dmodel.jpg')",
+      },
     },
   },
   plugins: [],
