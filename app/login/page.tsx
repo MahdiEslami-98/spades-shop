@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import Spinner from "@/components/spinner";
+import Logo from "@/components/logo";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -31,7 +32,6 @@ const LoginPage = () => {
     mutationFn: (value: LoginFormType) => loginService(value),
     onSuccess(data) {
       if (data.status === "success") {
-        console.log(data);
         const token = data.token;
         const user = data?.data.user;
         sessionStorage.setItem("access_token", token.accessToken);
@@ -116,7 +116,7 @@ const LoginPage = () => {
       <div className="mx-auto hidden md:block">
         <div className="flex items-end">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/Spades.svg" alt="" className="w-14" />
+          <Logo />
           <span className="text-4xl font-semibold">اسپادز</span>
         </div>
         <p className="pt-2 text-lg font-semibold">بهترین فروشگاه آنلاین ساعت</p>

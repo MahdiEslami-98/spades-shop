@@ -1,3 +1,4 @@
+"use server";
 import { ILoginData, ILoginRes } from "@/types";
 
 const loginService = async (data: ILoginData): Promise<ILoginRes | any> => {
