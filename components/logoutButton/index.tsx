@@ -13,7 +13,7 @@ const LogoutButton = () => {
     onSuccess: () => {
       sessionStorage.clear();
       localStorage.removeItem("user_info");
-      router.push("/login");
+      router.push("/");
     },
   });
   const logoutHandler = () => {
