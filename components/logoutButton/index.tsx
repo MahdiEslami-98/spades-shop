@@ -25,7 +25,7 @@ const LogoutButton = () => {
       className="flex items-center gap-x-4 rounded-3xl bg-black px-4 py-2 text-sm text-white"
     >
       <FaArrowRightFromBracket />
-      <span>خروج</span>
+      <span className="hidden sm:block">خروج</span>
     </Button>
   );
 };

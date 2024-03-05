@@ -30,17 +30,17 @@ const layout = ({ children }: { children: React.ReactNode }) => {
               className="flex items-center gap-x-4 rounded-3xl bg-black px-4 py-2 text-sm text-white"
             >
               <FaHouse />
-              صفحه اصلی
+              <span className="hidden sm:block">صفحه اصلی</span>
             </Link>
             <LogoutButton />
           </div>
         </div>
-        <div className="grid h-full grid-cols-12 gap-x-8 px-8 py-8">
-          <div className="col-span-2 max-h-[800px] rounded-xl border p-4 ">
+        <div className="grid h-full grid-cols-1 grid-rows-12 gap-y-8 px-8 py-8 lg:grid-cols-12 lg:grid-rows-1 lg:gap-x-8 lg:gap-y-0">
+          <div className="row-span-2 flex gap-x-4 rounded-xl border p-4 sm:gap-x-8 md:gap-x-24 lg:col-span-3 lg:block lg:max-h-[800px] lg:gap-x-0 xl:col-span-2">
             {tabs.map((item, index) => (
               <div
                 key={index}
-                className="flex items-center gap-x-4 py-2 text-lg"
+                className="flex items-center gap-x-2 py-2 text-lg lg:gap-x-4"
               >
                 {item.icon}
                 <Link className="text-sm font-medium" href={item.href}>
@@ -49,7 +49,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
               </div>
             ))}
           </div>
-          <div className="col-span-10 max-h-[800px] rounded-xl border p-4">
+          <div className="row-span-10 h-full rounded-xl border p-4 lg:col-span-9 lg:max-h-[800px] xl:col-span-10">
             {children}
           </div>
         </div>
