@@ -21,13 +21,14 @@ import { OrdersPageContext } from "@/context/ordersPageContext";
 
 const OrderTable = () => {
   const [stat, setStat] = useState("");
-  const { page } = useContext(OrdersPageContext);
+  const { page, setPage } = useContext(OrdersPageContext);
   const { data, isLoading, isSuccess } = useQuery({
     queryKey: ["orders", stat, page],
     queryFn: () => getOrders(stat, page),
   });
   const orderStatusChangeHandler = (e: React.ChangeEvent<HTMLFormElement>) => {
     setStat(e.target.value);
+    setPage(1);
   };
   if (isSuccess) {
   }
