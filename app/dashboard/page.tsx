@@ -1,7 +1,13 @@
+import OrderTable from "@/components/orderTable";
+import OrdersPageProvider from "@/context/ordersPageContext";
 import React from "react";
 
-const manager = () => {
-  return <div>manager</div>;
+const Manager = () => {
+  return (
+    <OrdersPageProvider>
+      <OrderTable />
+    </OrdersPageProvider>
+  );
 };
 
-export default manager;
+export default Manager;
