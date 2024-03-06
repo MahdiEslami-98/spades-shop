@@ -7,7 +7,7 @@ const getOrders = async (status = "", page = 1) => {
     stat = `&deliveryStatus=${status}`;
   }
   try {
-    const response = await get<IOrders>(`/orders?limit=7&page=${page}${stat}`);
+    const response = await get<IOrders>(`/orders?limit=10&page=${page}${stat}`);
     return response;
   } catch (error) {
     console.log(error);

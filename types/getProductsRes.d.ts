@@ -4,9 +4,9 @@ export interface IProductsRes {
   per_page: number;
   total: number;
   total_pages: number;
-  data: Data;
+  data: IDataProducs;
 }
-interface Data {
+interface IDataProducs {
   products?: ProductsEntity[] | null;
 }
 interface ProductsEntity {

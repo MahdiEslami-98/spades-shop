@@ -35,8 +35,8 @@ const layout = ({ children }: { children: React.ReactNode }) => {
             <LogoutButton />
           </div>
         </div>
-        <div className="grid h-full grid-cols-1 grid-rows-12 gap-y-8 px-8 py-8 lg:grid-cols-12 lg:grid-rows-1 lg:gap-x-8 lg:gap-y-0">
-          <div className="row-span-2 flex gap-x-4 rounded-xl border p-4 sm:gap-x-8 md:gap-x-24 lg:col-span-3 lg:block lg:max-h-[800px] lg:gap-x-0 xl:col-span-2">
+        <div className="grid grid-cols-1 grid-rows-12 gap-y-8 px-8 py-8 lg:grid-cols-12 lg:grid-rows-1 lg:gap-x-8 lg:gap-y-0">
+          <div className="row-span-2 flex gap-x-4 rounded-xl border p-4 sm:gap-x-8 md:gap-x-24 lg:col-span-3 lg:block lg:gap-x-0 xl:col-span-2">
             {tabs.map((item, index) => (
               <div
                 key={index}
@@ -49,7 +49,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
               </div>
             ))}
           </div>
-          <div className="row-span-10 h-full rounded-xl border p-4 lg:col-span-9 lg:max-h-[800px] xl:col-span-10">
+          <div className="row-span-10 rounded-xl border p-4 lg:col-span-9  xl:col-span-10 ">
             {children}
           </div>
         </div>

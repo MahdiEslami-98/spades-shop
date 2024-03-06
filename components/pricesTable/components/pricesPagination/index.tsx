@@ -1,9 +1,10 @@
 import Button from "@/components/button";
-import { OrdersPageContext } from "@/context/ordersPageContext";
+import { TableCell } from "@/components/ui/table";
+import { PricesPageContext } from "@/context/pricesPageContext";
 import React, { useContext } from "react";
 
 const Btn = ({ i }: { i: number }) => {
-  const { page, setPage } = useContext(OrdersPageContext);
+  const { page, setPage } = useContext(PricesPageContext);
   return (
     <Button
       className={
@@ -21,9 +22,8 @@ const Dots = () => {
   return <span className="rounded-md px-2 py-1">...</span>;
 };
 
-const OrdersPagination = ({ p, total }: { p: number; total: number }) => {
-  const { page, setPage } = useContext(OrdersPageContext);
-
+const PricesPagination = ({ total }: { total: number }) => {
+  const { page, setPage } = useContext(PricesPageContext);
   const btns: JSX.Element[] = [];
 
   if (total < 6) {
@@ -66,23 +66,26 @@ const OrdersPagination = ({ p, total }: { p: number; total: number }) => {
       setPage(page - 1);
     }
   };
+
   return (
-    <div className="-my-1 flex flex-row-reverse items-center justify-start gap-x-2">
-      <Button
-        className="rounded-md border border-black px-2 py-1"
-        onClick={pervPageHandler}
-      >
-        قبلی
-      </Button>
-      {btns}
-      <Button
-        className="rounded-md border border-black px-2 py-1"
-        onClick={nextPageHandler}
-      >
-        بعدی
-      </Button>
-    </div>
+    <TableCell colSpan={4}>
+      <div className="-my-1 flex flex-row-reverse items-center justify-start gap-x-2">
+        <Button
+          className="rounded-md border border-black px-2 py-1"
+          onClick={pervPageHandler}
+        >
+          قبلی
+        </Button>
+        {btns.length !== 0 && btns}
+        <Button
+          className="rounded-md border border-black px-2 py-1"
+          onClick={nextPageHandler}
+        >
+          بعدی
+        </Button>
+      </div>
+    </TableCell>
   );
 };
 
-export default OrdersPagination;
+export default PricesPagination;

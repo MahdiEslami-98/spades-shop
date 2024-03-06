@@ -1,7 +1,15 @@
+import PricesTable from "@/components/pricesTable";
+import PricesPageProvider from "@/context/pricesPageContext";
 import React from "react";
 
 const prices = () => {
-  return <div>page price</div>;
+  return (
+    <>
+      <PricesPageProvider>
+        <PricesTable />
+      </PricesPageProvider>
+    </>
+  );
 };
 
 export default prices;
