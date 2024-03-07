@@ -1,3 +1,4 @@
+import ProductsTable from "@/components/productsTable";
 import ProductsPageProvider from "@/context/productPageContext";
 import React from "react";
 
