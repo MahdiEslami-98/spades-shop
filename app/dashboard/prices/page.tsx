@@ -1,8 +1,11 @@
+"use client";
 import PricesTable from "@/components/pricesTable";
 import PricesPageProvider from "@/context/pricesPageContext";
+import useAuthAdmin from "@/hooks/useAuthAdmin";
 import React from "react";
 
-const prices = () => {
+const Prices = () => {
+  useAuthAdmin();
   return (
     <>
       <PricesPageProvider>
@@ -12,4 +15,4 @@ const prices = () => {
   );
 };
 
-export default prices;
+export default Prices;

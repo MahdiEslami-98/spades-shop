@@ -1,4 +1,3 @@
-"use server";
 import { ILoginData, ILoginRes } from "@/types/login";
 import { post } from "./axiosInstance";
 import { AxiosError } from "axios";

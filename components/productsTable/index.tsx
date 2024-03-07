@@ -15,6 +15,7 @@ import { ProductsPageContext } from "@/context/productPageContext";
 import getProducts from "@/api/getProducts";
 import ProductsRow from "./components/productsRow";
 import ProductPagination from "./components/productsPagination";
+import BigerSpinner from "../spinner/bigerSpinner";
 
 const ProductsTable = () => {
   const { page } = useContext(ProductsPageContext);
@@ -26,7 +27,7 @@ const ProductsTable = () => {
     <div>
       <div className="flex justify-between">
         <div>
-          <p className="text-xl md:text-2xl">کالاها</p>
+          <p className="pr-8 text-xl md:text-2xl">کالاها</p>
         </div>
         <div className="flex items-center gap-x-2 rounded-md bg-black px-2 py-1 text-white">
           <Button>افزودن کالا</Button>
@@ -53,6 +54,7 @@ const ProductsTable = () => {
             </TableRow>
           </TableFooter>
         </Table>
+        {isLoading && <BigerSpinner />}
       </div>
     </div>
   );

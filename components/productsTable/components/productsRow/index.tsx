@@ -10,21 +10,28 @@ const ProductsRow = ({ data }: { data: ProductsEntity }) => {
     <TableRow>
       <TableCell>
         <img
-          src={data.thumbnail}
+          src={
+            "http://localhost:8000/images/products/thumbnails/" + data.thumbnail
+          }
           alt={data.brand}
-          className="w-10 object-cover object-center"
+          className="w-20 object-cover object-center"
         />
       </TableCell>
       <TableCell>
-        <Link className="hover:underline" href={`/product/${data._id}`}>
+        <Link
+          className="text-xs hover:underline sm:text-base"
+          href={`/product/${data._id}`}
+        >
           {data.name}
         </Link>
       </TableCell>
       <TableCell>
         <GetCategory id={data.category} />
       </TableCell>
-      <TableCell className="flex items-center justify-center gap-x-2">
-        <Button className="rounded-md bg-yellow-400 px-2 py-1">ویرایش</Button>
+      <TableCell className="sm:flex sm:items-center sm:justify-center sm:gap-x-2">
+        <Button className="mb-2 rounded-md bg-yellow-400 px-2 py-1 sm:mb-0">
+          ویرایش
+        </Button>
         <Button className="rounded-md bg-red-400 px-2 py-1">حذف</Button>
       </TableCell>
     </TableRow>

@@ -1,8 +1,11 @@
+"use client";
 import ProductsTable from "@/components/productsTable";
 import ProductsPageProvider from "@/context/productPageContext";
+import useAuthAdmin from "@/hooks/useAuthAdmin";
 import React from "react";
 
-const allProducts = () => {
+const AllProducts = () => {
+  useAuthAdmin();
   return (
     <ProductsPageProvider>
       <ProductsTable />
@@ -10,4 +13,4 @@ const allProducts = () => {
   );
 };
 
-export default allProducts;
+export default AllProducts;

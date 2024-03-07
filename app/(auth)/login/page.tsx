@@ -8,12 +8,13 @@ import loginFormSchema, {
 } from "@/utils/validations/loginFormValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import Spinner from "@/components/spinner";
 import Logo from "@/components/logo";
+import getAccessToken from "@/api/getAccessToken";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -59,6 +60,20 @@ const LoginPage = () => {
       });
     },
   });
+
+  useEffect(() => {
+    document.title = "ورود به حساب کاربری";
+    const token = sessionStorage.getItem("refresh_token");
+    const userRole = sessionStorage.getItem("user_role");
+    if (token && userRole === "ADMIN") {
+      getAccessToken(token).then((res) => {
+        if (res?.status === "success") {
+          sessionStorage.setItem("access_token", res.token.accessToken);
+          router.push("/dashboard");
+        }
+      });
+    }
+  }, []);
 
   const loginFormSubmit = (value: LoginFormType) => {
     loginMutate(value);

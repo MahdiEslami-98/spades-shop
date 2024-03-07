@@ -15,11 +15,11 @@ const PricesRow = ({ data }: { data: ProductsEntity }) => {
       </TableCell>
       <TableCell>
         <Button>{data.price}</Button>
-        <Input className="hidden" value={data.price} />
+        <Input className="hidden" value={data.price} readOnly />
       </TableCell>
       <TableCell>
         <Button>{data.quantity}</Button>
-        <Input className="hidden" value={data.quantity} />
+        <Input className="hidden" value={data.quantity} readOnly />
       </TableCell>
     </TableRow>
   );
