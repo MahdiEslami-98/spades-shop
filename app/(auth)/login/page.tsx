@@ -13,8 +13,8 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import Spinner from "@/components/spinner";
-import Logo from "@/components/logo";
 import getAccessToken from "@/api/getAccessToken";
+import Cookies from "js-cookie";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -39,6 +39,9 @@ const LoginPage = () => {
         sessionStorage.setItem("refresh_token", token.refreshToken);
         sessionStorage.setItem("user_role", user.role);
         localStorage.setItem("user_info", JSON.stringify(user));
+        Cookies.set("access_token", token.accessToken);
+        Cookies.set("refresh_token", token.refreshToken);
+        Cookies.set("user_role", user.role);
         if (user.role === "ADMIN") {
           router.push("/dashboard");
           toast({
@@ -80,64 +83,54 @@ const LoginPage = () => {
   };
 
   return (
-    <>
-      <form
-        className="flex flex-col gap-y-4 px-6 sm:px-8 md:px-12 lg:px-24 xl:px-40"
-        onSubmit={handleSubmit(loginFormSubmit)}
-      >
-        <div>
-          <h1 className="text-3xl font-bold">ورود به پنل مدیریت</h1>
-        </div>
-        <div className="mb-4 w-full">
-          <Input
-            placeholder="نام کاربری"
-            type="text"
-            className="w-full rounded-xl bg-black/30 px-4 py-2 outline-0 placeholder:text-slate-800"
-            {...register("username")}
-          />
-          <p
-            className={
-              "pr-4 pt-1 text-sm text-red-500 " +
-              (errors.username?.message ? "visible" : "invisible")
-            }
-          >
-            {errors.username?.message} <span className="invisible">a</span>
-          </p>
-        </div>
-        <div className="mb-4">
-          <Input
-            placeholder="رمز عبور"
-            type="password"
-            className="w-full rounded-xl bg-black/30 px-4 py-2 outline-0 placeholder:text-slate-800"
-            {...register("password")}
-          />
-          <p
-            className={
-              "pr-4 pt-1 text-sm text-red-500 " +
-              (errors.password?.message ? "visible" : "invisible")
-            }
-          >
-            {errors.password?.message} <span className="invisible">a</span>
-          </p>
-        </div>
-        <div>
-          <Button
-            type="submit"
-            className=" flex w-full items-end justify-center gap-x-4 rounded-xl bg-green-500 px-4 py-2 text-white"
-          >
-            ورود {isPending && <Spinner />}
-          </Button>
-        </div>
-      </form>
-      <div className="mx-auto hidden md:block">
-        <div className="flex items-end">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <Logo />
-          <span className="text-4xl font-semibold">اسپادز</span>
-        </div>
-        <p className="pt-2 text-lg font-semibold">بهترین فروشگاه آنلاین ساعت</p>
+    <form
+      className="row-span-2 flex flex-col gap-y-4 px-6 sm:px-8 md:px-12 lg:px-24 xl:px-40"
+      onSubmit={handleSubmit(loginFormSubmit)}
+    >
+      <div>
+        <h1 className="text-3xl font-bold">ورود به پنل مدیریت</h1>
       </div>
-    </>
+      <div className="mb-4 w-full">
+        <Input
+          placeholder="نام کاربری"
+          type="text"
+          className="w-full rounded-xl bg-black/30 px-4 py-2 outline-0 placeholder:text-slate-800"
+          {...register("username")}
+        />
+        <p
+          className={
+            "pr-4 pt-1 text-sm text-red-500 " +
+            (errors.username?.message ? "visible" : "invisible")
+          }
+        >
+          {errors.username?.message} <span className="invisible">a</span>
+        </p>
+      </div>
+      <div className="mb-4">
+        <Input
+          placeholder="رمز عبور"
+          type="password"
+          className="w-full rounded-xl bg-black/30 px-4 py-2 outline-0 placeholder:text-slate-800"
+          {...register("password")}
+        />
+        <p
+          className={
+            "pr-4 pt-1 text-sm text-red-500 " +
+            (errors.password?.message ? "visible" : "invisible")
+          }
+        >
+          {errors.password?.message} <span className="invisible">a</span>
+        </p>
+      </div>
+      <div>
+        <Button
+          type="submit"
+          className=" flex w-full items-end justify-center gap-x-4 rounded-xl bg-green-500 px-4 py-2 text-white"
+        >
+          ورود {isPending && <Spinner />}
+        </Button>
+      </div>
+    </form>
   );
 };
 

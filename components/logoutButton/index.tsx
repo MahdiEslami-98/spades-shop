@@ -5,12 +5,16 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { FaArrowRightFromBracket } from "react-icons/fa6";
 import logoutService from "@/api/logOutService";
+import Cookies from "js-cookie";
 
 const LogoutButton = () => {
   const router = useRouter();
   const { mutate: logoutMutate } = useMutation({
     mutationFn: logoutService,
     onSuccess: () => {
+      Cookies.remove("access_token");
+      Cookies.remove("refresh_token");
+      Cookies.remove("user_role");
       sessionStorage.clear();
       localStorage.removeItem("user_info");
       router.push("/");
