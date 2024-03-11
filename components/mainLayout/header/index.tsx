@@ -5,7 +5,7 @@ import { FaCartShopping, FaUserGear } from "react-icons/fa6";
 
 const Header = () => {
   return (
-    <header className="border-b">
+    <header className="border-b border-black">
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8" aria-label="Top">
         <div className="grid w-full grid-cols-2 items-center  py-2">
           <div className="flex items-center ">
