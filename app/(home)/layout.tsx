@@ -1,7 +1,7 @@
 import MainLayout from "@/components/mainLayout";
 import React, { ReactNode } from "react";
 
-const HomeLayput = ({ children }: { children: ReactNode }) => {
+const HomeLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <MainLayout />
@@ -10,4 +10,4 @@ const HomeLayput = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export default HomeLayput;
+export default HomeLayout;

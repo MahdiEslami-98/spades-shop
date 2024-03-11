@@ -20,7 +20,7 @@ interface ProductsEntity {
   brand: string;
   description: string;
   thumbnail: string;
-  images?: string[] | null;
+  images: string[] | null;
   createdAt: string;
   updatedAt: string;
   slugname: string;

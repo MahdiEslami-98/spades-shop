@@ -92,3 +92,13 @@
   opacity: 0.3;
   z-index: -1;
 }
+
+@layer utilities {
+  .right-to-left {
+    direction: rtl;
+  }
+
+  .left-to-right {
+    direction: ltr;
+  }
+}
