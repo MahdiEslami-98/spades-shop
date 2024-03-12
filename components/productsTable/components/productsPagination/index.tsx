@@ -1,10 +1,10 @@
 import Button from "@/components/button";
 import { TableCell } from "@/components/ui/table";
-import { ProductsPageContext } from "@/context/productPageContext";
+import { ProductsTablePageContext } from "@/context/productTablePageContext";
 import React, { useContext } from "react";
 
 const Btn = ({ i }: { i: number }) => {
-  const { page, setPage } = useContext(ProductsPageContext);
+  const { page, setPage } = useContext(ProductsTablePageContext);
   return (
     <Button
       className={
@@ -23,7 +23,7 @@ const Dots = () => {
 };
 
 const ProductPagination = ({ total }: { total: number }) => {
-  const { page, setPage } = useContext(ProductsPageContext);
+  const { page, setPage } = useContext(ProductsTablePageContext);
   const btns: JSX.Element[] = [];
 
   if (total < 6) {

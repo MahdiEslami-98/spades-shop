@@ -11,14 +11,14 @@ import {
 } from "../ui/table";
 import ProductsHead from "./components/productsHead";
 import { useQuery } from "@tanstack/react-query";
-import { ProductsPageContext } from "@/context/productPageContext";
+import { ProductsTablePageContext } from "@/context/productTablePageContext";
 import getProducts from "@/api/getProducts";
 import ProductsRow from "./components/productsRow";
 import ProductPagination from "./components/productsPagination";
 import BigerSpinner from "../spinner/bigerSpinner";
 
 const ProductsTable = () => {
-  const { page } = useContext(ProductsPageContext);
+  const { page } = useContext(ProductsTablePageContext);
   const { data, isSuccess, isLoading } = useQuery({
     queryKey: ["mProducts", page],
     queryFn: () => getProducts(page),

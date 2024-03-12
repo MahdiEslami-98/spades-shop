@@ -36,6 +36,9 @@ const config = {
       fontFamily: {
         vazir: ["Vazirmatn", ...defaultTheme.fontFamily.sans],
       },
+      dropShadow: {
+        base: "0 1px 5px rgba(0, 0, 0, 0.2)",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
