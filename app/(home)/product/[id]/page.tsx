@@ -84,7 +84,7 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
             <div className="col-span-12 flex h-52 flex-col justify-between md:col-span-6 md:h-full lg:col-span-7">
               <div>
                 <Link
-                  href={`/products-category?category=${data.data.product.category}&page=1`}
+                  href={`/products-category?category=${data.data.product.category._id}&page=1`}
                   className="text-sm font-medium text-blue-500  hover:underline"
                 >
                   {data.data.product.brand.toUpperCase()}
@@ -98,7 +98,7 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
                   تومان
                 </p>
-                <form className="flex flex-row-reverse items-center gap-x-2">
+                <form className="flex flex-row-reverse items-center gap-x-2 pt-2">
                   <Button
                     className="rounded-md bg-black px-4 py-2 text-white"
                     disabled

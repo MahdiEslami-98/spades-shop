@@ -9,13 +9,19 @@ const HomeLayout = ({ children }: { children: ReactNode }) => {
       <nav className="container mx-auto flex items-center gap-x-2 px-4 py-2 text-sm sm:gap-x-4 sm:text-base md:px-12">
         <Link href={"/"}>صفحه اصلی </Link>
         <Link href={"/products-category?page=1"}>همه محصولات</Link>
-        <Link href={"/products-category?category=65e5d4df0260ee7ae2e039fc"}>
+        <Link
+          href={"/products-category?category=65e5d4df0260ee7ae2e039fc&page=1"}
+        >
           CITIZEN
         </Link>
-        <Link href={"/products-category?category=65e5d5360260ee7ae2e03a00"}>
+        <Link
+          href={"/products-category?category=65e5d5360260ee7ae2e03a00&page=1"}
+        >
           SEIKO
         </Link>
-        <Link href={"/products-category?category=65e5d5770260ee7ae2e03a04"}>
+        <Link
+          href={"/products-category?category=65e5d5770260ee7ae2e03a04&page=1"}
+        >
           CASIO
         </Link>
       </nav>
