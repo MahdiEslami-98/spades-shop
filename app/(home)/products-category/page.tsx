@@ -6,22 +6,42 @@ import ProductCardSkeleton from "@/components/productCardSkeleton";
 import { ProductsPaginationContext } from "@/context/productsPaginationContext";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 const ProductsPage = () => {
   const param = useSearchParams();
   const { page, setPage } = useContext(ProductsPaginationContext);
+  const [sort, setSort] = useState("-createdAt");
   const category = param.get("category")?.toString();
   const pageParam = param.get("page");
   if (pageParam) {
     setPage(Number(pageParam));
   }
   const { data, isSuccess, isLoading, isError } = useQuery({
-    queryKey: ["products", page, category],
-    queryFn: () => getProducts(page, "", category, 12),
+    queryKey: ["products", page, sort, category],
+    queryFn: () => getProducts(page, sort, category, 12),
   });
   return (
     <div>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-x-4 p-2">
+          <p className="hidden sm:block">مرتب سازی بر اساس :</p>
+          <select
+            name="sort"
+            onChange={(e) => setSort(e.target.value)}
+            className="rounded-3xl border border-black px-3 py-1 text-sm"
+          >
+            <option value="-createdAt">جدیدترین</option>
+            <option value="-price">گرانترین</option>
+            <option value="price">ارزانترین</option>
+            <option value="-quantity">بیشترین</option>
+            <option value="quantity">کمترین</option>
+          </select>
+        </div>
+        <div>
+          <p>{data && data.total} کالا</p>
+        </div>
+      </div>
       <div className="grid grid-cols-12">
         {data?.data.products?.map((item) => (
           <ProductCard item={item} key={item._id} />

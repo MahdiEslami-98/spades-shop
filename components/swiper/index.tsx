@@ -20,7 +20,7 @@ const Slider = ({ className }: { className?: string }) => {
         enabled: true,
       }}
       autoplay={{
-        delay: 3000,
+        delay: 5000,
         disableOnInteraction: false,
       }}
       loop={true}

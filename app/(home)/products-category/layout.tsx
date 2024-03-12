@@ -27,7 +27,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
             <h2 className="pt-3 text-xl font-bold">فیلترها</h2>
           </div> */}
         </div>
-        <div className="row-span-11 p-4 md:col-span-9 xl:col-span-10">
+        <div className="row-span-11 py-4 md:col-span-9 md:px-4 xl:col-span-10">
           <ProductsPaginationProvider>{children}</ProductsPaginationProvider>
         </div>
       </div>
