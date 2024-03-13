@@ -26,7 +26,7 @@ const ProductsPagination = ({
       <Link
         href={`/products-category?${par}page=${i}`}
         className={
-          "rounded-md border border-black px-2 py-1 " +
+          "w-8 rounded-md border border-black py-1 text-center " +
           (i === page ? "bg-black text-white" : "bg-white text-black")
         }
         onClick={() => setPage(i)}
