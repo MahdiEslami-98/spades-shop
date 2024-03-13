@@ -21,7 +21,7 @@ const ProductsTable = () => {
   const { page } = useContext(ProductsTablePageContext);
   const { data, isSuccess, isLoading } = useQuery({
     queryKey: ["mProducts", page],
-    queryFn: () => getProducts(page),
+    queryFn: () => getProducts(page, "-createdAt"),
   });
   return (
     <div>

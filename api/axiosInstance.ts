@@ -52,10 +52,10 @@ const put = async <TReq, TRes>(
   return await baseApi<TRes>(url, options);
 };
 
-const deleteData = (
+const deleteData = <TRes>(
   url: string,
   headers?: AxiosRequestHeaders,
-): Promise<void> => {
+): Promise<TRes> => {
   const options: AxiosRequestConfig = {
     method: "DELETE",
     headers: headers,

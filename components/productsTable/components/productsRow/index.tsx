@@ -4,11 +4,13 @@ import { ProductsEntity } from "@/types/getProductsRes";
 import Link from "next/link";
 import React from "react";
 import GetCategory from "../category";
+import DeleteModal from "@/components/deleteModal";
 
 const ProductsRow = ({ data }: { data: ProductsEntity }) => {
   return (
     <TableRow>
       <TableCell>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={
             "http://localhost:8000/images/products/thumbnails/" + data.thumbnail
@@ -32,7 +34,7 @@ const ProductsRow = ({ data }: { data: ProductsEntity }) => {
         <Button className="mb-2 rounded-md bg-yellow-400 px-2 py-1 sm:mb-0">
           ویرایش
         </Button>
-        <Button className="rounded-md bg-red-400 px-2 py-1">حذف</Button>
+        <DeleteModal id={data._id} />
       </TableCell>
     </TableRow>
   );

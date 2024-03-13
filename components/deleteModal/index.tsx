@@ -1,3 +1,4 @@
+"use client";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,23 +10,50 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useMutation } from "@tanstack/react-query";
 
 import React from "react";
+import Button from "../button";
+import deleteProductById from "@/api/deleteProductById";
+import { useToast } from "../ui/use-toast";
+import { queryClient } from "@/lib/raectQuery";
 
-const DeleteModal = () => {
+const DeleteModal = ({ id }: { id: string }) => {
+  const { toast } = useToast();
+  const { mutate: deleteMutate } = useMutation({
+    mutationFn: (value: string) => deleteProductById(value),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["mProducts"] });
+      toast({
+        title: "✅محصول با موفقیت حذف شد",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "❌مشکلی پیش آمده",
+      });
+    },
+  });
+
   return (
     <AlertDialog>
-      <AlertDialogTrigger>Open</AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogTrigger className="rounded-md bg-red-500 px-3 py-1 text-white">
+        حذف
+      </AlertDialogTrigger>
+      <AlertDialogContent className="">
         <AlertDialogHeader>
-          <AlertDialogTitle>آیا مطمئن هستید؟</AlertDialogTitle>
-          <AlertDialogDescription>
+          <AlertDialogTitle className="text-right">
+            آیا مطمئن هستید؟
+          </AlertDialogTitle>
+          <AlertDialogDescription className="text-right">
             این عملیات غیرقابل بازگشت است
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>انصراف</AlertDialogCancel>
-          <AlertDialogAction>حذف</AlertDialogAction>
+          <AlertDialogAction>
+            <Button onClick={() => deleteMutate(id)}>حذف</Button>
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
