@@ -1,10 +1,10 @@
-import Button from "@/components/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { ProductsEntity } from "@/types/getProductsRes";
 import Link from "next/link";
 import React from "react";
 import GetCategory from "../category";
 import DeleteModal from "@/components/deleteModal";
+import EditProductDialog from "@/components/productManagerModal/editProductDialog";
 
 const ProductsRow = ({ data }: { data: ProductsEntity }) => {
   return (
@@ -31,9 +31,7 @@ const ProductsRow = ({ data }: { data: ProductsEntity }) => {
         <GetCategory id={data.category} />
       </TableCell>
       <TableCell className="sm:flex sm:items-center sm:justify-center sm:gap-x-2">
-        <Button className="mb-2 rounded-md bg-yellow-400 px-2 py-1 sm:mb-0">
-          ویرایش
-        </Button>
+        <EditProductDialog id={data._id} />
         <DeleteModal id={data._id} />
       </TableCell>
     </TableRow>

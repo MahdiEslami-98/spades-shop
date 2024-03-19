@@ -2,9 +2,6 @@ import axios, { AxiosRequestConfig, AxiosRequestHeaders } from "axios";
 
 const httpService = axios.create({
   baseURL: `${process.env.BASE_URL}`,
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
 const baseApi = async <T>(
@@ -34,7 +31,7 @@ const post = async <TReq, TRes>(
   const options: AxiosRequestConfig = {
     method: "POST",
     headers: headers,
-    data: JSON.stringify(data),
+    data: data,
   };
   return await baseApi<TRes>(url, options);
 };
@@ -47,7 +44,7 @@ const put = async <TReq, TRes>(
   const options: AxiosRequestConfig = {
     method: "PUT",
     headers: headers,
-    data: JSON.stringify(data),
+    data: data,
   };
   return await baseApi<TRes>(url, options);
 };
@@ -63,4 +60,17 @@ const deleteData = <TRes>(
   return baseApi(url, options);
 };
 
-export { get, post, put, deleteData };
+const patch = async <TReq, TRes>(
+  url: string,
+  data: TReq,
+  headers?: AxiosRequestHeaders,
+) => {
+  const options: AxiosRequestConfig = {
+    method: "PATCH",
+    headers: headers,
+    data: data,
+  };
+  return await baseApi<TRes>(url, options);
+};
+
+export { get, post, put, patch, deleteData };
