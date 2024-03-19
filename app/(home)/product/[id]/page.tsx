@@ -31,7 +31,6 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
   }
 
   const debounce = useDebouncedCallback((value) => {
-    console.log(value);
     if (Number(value) < 1) {
       setQuantity(1);
     }

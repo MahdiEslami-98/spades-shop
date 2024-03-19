@@ -68,7 +68,7 @@ const PricesPagination = ({ total }: { total: number }) => {
   };
 
   return (
-    <TableCell colSpan={4}>
+    <TableCell colSpan={6}>
       <div className="-my-1 flex flex-row-reverse items-center justify-start gap-x-2">
         <Button
           className="rounded-md border border-black px-2 py-1"

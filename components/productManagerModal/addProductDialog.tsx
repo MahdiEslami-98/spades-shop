@@ -47,7 +47,7 @@ const AddProductDialog = () => {
   const { mutate: addMutate, isPending } = useMutation({
     mutationFn: (value: FormData) => addProduct(value),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["mProducts"] });
+      queryClient.invalidateQueries({ queryKey: ["mProducts", "prices"] });
       toast({
         title: "✅محصول با موفقیت اضافه شد",
       });

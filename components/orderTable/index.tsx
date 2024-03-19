@@ -29,8 +29,6 @@ const OrderTable = () => {
     setStat(e.target.value);
     setPage(1);
   };
-  if (isSuccess) {
-  }
   return (
     <div>
       <div className="flex justify-between">

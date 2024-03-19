@@ -4,7 +4,7 @@ import React from "react";
 const PricesHead = () => {
   return (
     <TableRow>
-      <TableHead colSpan={2} className="text-right">
+      <TableHead colSpan={4} className="text-right">
         نام محصول
       </TableHead>
       <TableHead className="text-right">قیمت</TableHead>
