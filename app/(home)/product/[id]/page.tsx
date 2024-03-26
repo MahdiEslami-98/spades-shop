@@ -123,9 +123,13 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
           <div className="mt-8 flex flex-col gap-y-4">
             <h2>توضیحات محصول:</h2>
             <div>
-              <p className="line-clamp-2" ref={paragraph}>
-                {data && data.data.product.description}
-              </p>
+              <p
+                className="line-clamp-2"
+                ref={paragraph}
+                dangerouslySetInnerHTML={{
+                  __html: data.data.product.description,
+                }}
+              ></p>
               <Button
                 onClick={(e) => moreTextHandler(e)}
                 className="font-medium text-blue-500 underline hover:no-underline"

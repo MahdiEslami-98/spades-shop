@@ -20,6 +20,8 @@ import { useMutation } from "@tanstack/react-query";
 import addProduct from "@/api/addProduct";
 import { useToast } from "../ui/use-toast";
 import { queryClient } from "@/lib/raectQuery";
+import ReactQuill from "react-quill";
+import { modules } from "@/utils/QuillToolbar";
 
 const AddProductDialog = () => {
   const [open, setOpen] = useState(false);
@@ -47,7 +49,7 @@ const AddProductDialog = () => {
   const { mutate: addMutate, isPending } = useMutation({
     mutationFn: (value: FormData) => addProduct(value),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["mProducts", "prices"] });
+      queryClient.invalidateQueries({ queryKey: ["mProducts"] });
       toast({
         title: "✅محصول با موفقیت اضافه شد",
       });
@@ -91,7 +93,7 @@ const AddProductDialog = () => {
           </span>
         </Button>
       </DialogTrigger>
-      <DialogContent dir="rtl" className="sm:max-w-[425px] rtl:space-x-reverse">
+      <DialogContent className="sm:max-w-[600px] rtl:space-x-reverse">
         <DialogHeader>
           <DialogTitle className="text-right">افزودن کالا</DialogTitle>
         </DialogHeader>
@@ -99,33 +101,37 @@ const AddProductDialog = () => {
           className="flex flex-col gap-y-2"
           onSubmit={handleSubmit(submitDialog)}
         >
-          <div className="flex flex-col gap-y-2">
-            <label htmlFor="name">نام کالا :</label>
-            <Input
-              id="name"
-              className="rounded-md border border-black px-4"
-              {...register("name")}
-            />
-            <span className="text-xs text-red-500">{errors.name?.message}</span>
-          </div>
-          <div className="flex flex-col gap-y-2">
-            <label htmlFor="price">قیمت :</label>
-            <Input
-              type="number"
-              id="price"
-              className="rounded-md border border-black px-4"
-              {...register("price")}
-            />
-            <span className="text-xs text-red-500">
-              {errors.price?.message}
-            </span>
+          <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2">
+            <div className="flex flex-col gap-y-1">
+              <label htmlFor="name">نام کالا :</label>
+              <Input
+                id="name"
+                className="rounded-md border border-black px-4"
+                {...register("name")}
+              />
+              <span className="text-xs text-red-500">
+                {errors.name?.message}
+              </span>
+            </div>
+            <div className="flex flex-col gap-y-1">
+              <label htmlFor="price">قیمت :</label>
+              <Input
+                type="number"
+                id="price"
+                className="rounded-md border border-black px-4"
+                {...register("price")}
+              />
+              <span className="text-xs text-red-500">
+                {errors.price?.message}
+              </span>
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-x-4">
             <div>
               <label htmlFor="category">دسته بندی :</label>
               <select
                 id="category"
-                className="mt-2 w-full rounded-md border border-black px-4"
+                className="mt-1 w-full rounded-md border border-black px-4"
                 {...register("category")}
               >
                 <option value="">انتخاب کنید</option>
@@ -140,7 +146,7 @@ const AddProductDialog = () => {
               <select
                 {...register("subcategory")}
                 id="sub"
-                className="mt-2 w-full rounded-md border border-black px-4"
+                className="mt-1 w-full rounded-md border border-black px-4"
               >
                 <option value="">انتخاب کنید</option>
                 <SubOption value={category} />
@@ -150,12 +156,12 @@ const AddProductDialog = () => {
               </span>
             </div>
           </div>
-          <div className="flex gap-x-4">
+          <div className="grid grid-cols-2 gap-x-4">
             <div>
               <label htmlFor="brand">برند :</label>
               <Input
                 {...register("brand")}
-                className="mt-2 w-full rounded-md border border-black px-4"
+                className="mt-1 w-full rounded-md border border-black px-4"
                 id="brand"
               />
               <span className="text-xs text-red-500">
@@ -167,7 +173,7 @@ const AddProductDialog = () => {
               <Input
                 {...register("quantity")}
                 type="number"
-                className="mt-2 w-full rounded-md border border-black px-4"
+                className="mt-1 w-full rounded-md border border-black px-4"
                 id="quantity"
               />
               <span className="text-xs text-red-500">
@@ -175,53 +181,63 @@ const AddProductDialog = () => {
               </span>
             </div>
           </div>
-          <div className="flex flex-col gap-y-2">
-            <label htmlFor="image">تصویر :</label>
-            <Controller
-              name="images"
-              control={control}
-              render={({ field }) => (
-                <input
-                  multiple
-                  type="file"
-                  id="image"
-                  onChange={(e) => {
-                    const file = Array.from(e.target.files || []);
-                    field.onChange(file);
-                  }}
-                  className="overflow-hidden rounded-md border border-black"
-                />
-              )}
-            />
-            <span className="text-xs text-red-500">
-              {errors.images?.message}
-            </span>
+          <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2">
+            <div className="flex flex-col gap-y-1">
+              <label htmlFor="image">تصویر :</label>
+              <Controller
+                name="images"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    multiple
+                    type="file"
+                    id="image"
+                    onChange={(e) => {
+                      const file = Array.from(e.target.files || []);
+                      field.onChange(file);
+                    }}
+                    className="overflow-hidden rounded-md border border-black"
+                  />
+                )}
+              />
+              <span className="text-xs text-red-500">
+                {errors.images?.message}
+              </span>
+            </div>
+            <div className="flex flex-col gap-y-1">
+              <label htmlFor="thumbnail">thumbnail :</label>
+              <Controller
+                name="thumbnail"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    type="file"
+                    id="thumbnail"
+                    className="overflow-hidden rounded-md border border-black"
+                    onChange={(e) => {
+                      const file = Array.from(e.target.files || []);
+                      field.onChange(file[0]);
+                    }}
+                  />
+                )}
+              />
+            </div>
           </div>
-          <div className="flex flex-col gap-y-2">
-            <label htmlFor="thumbnail">thumbnail :</label>
-            <Controller
-              name="thumbnail"
-              control={control}
-              render={({ field }) => (
-                <input
-                  type="file"
-                  id="thumbnail"
-                  className="overflow-hidden rounded-md border border-black"
-                  onChange={(e) => {
-                    const file = Array.from(e.target.files || []);
-                    field.onChange(file[0]);
-                  }}
-                />
-              )}
-            />
-          </div>
-          <div className="flex flex-col gap-y-2">
+          <div>
             <label htmlFor="description">توضیحات :</label>
-            <textarea
-              id="description"
-              {...register("description")}
-              className="rounded-md border border-black px-4 py-1"
-            ></textarea>
+            <Controller
+              control={control}
+              name="description"
+              render={({ field }) => (
+                <ReactQuill
+                  theme="snow"
+                  className="left-to-right max-w-[550px]"
+                  modules={modules}
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              )}
+            />
             <span className="text-xs text-red-500">
               {errors.description?.message}
             </span>

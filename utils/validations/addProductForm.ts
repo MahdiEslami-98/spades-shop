@@ -33,7 +33,8 @@ const addProductSchema = z.object({
   name: z
     .string({ required_error: "نام کالا را وارد کنید" })
     .min(3, { message: "نام کالا باید بیشتر از 3 حرف باشد" })
-    .max(100, { message: "نام کالا باید کمتر از 100 حرف باشد" }),
+    .max(100, { message: "نام کالا باید کمتر از 100 حرف باشد" })
+    .trim(),
   price: z
     .string({ required_error: "قیمت کالا را وارد کنید" })
     .min(5, { message: "قیمت کالا باید بیشتر از 5 رقم باشد" })
@@ -44,11 +45,13 @@ const addProductSchema = z.object({
   brand: z
     .string({ required_error: "برند کالا را وارد کنید" })
     .min(3, { message: "برند کالا باید بیشتر از 3 حرف باشد" })
-    .max(30, { message: "برند کالا باید کمتر از 30 حرف باشد" }),
+    .max(30, { message: "برند کالا باید کمتر از 30 حرف باشد" })
+    .trim(),
   description: z
-    .string({ required_error: "توضیحات کالا را وارد کنید" })
-    .min(10, { message: "توضیحات کالا باید بیشتر از 10 حرف باشد" })
-    .max(2000, { message: "توضیحات کالا باید کمتر از 2000 حرف باشد" }),
+    .string()
+    .min(17, { message: "توضیحات کالا باید بیشتر از 10 حرف باشد" })
+    .max(2000, { message: "توضیحات کالا باید کمتر از 2000 حرف باشد" })
+    .trim(),
   thumbnail: z
     .instanceof(File)
     .refine(

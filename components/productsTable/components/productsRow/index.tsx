@@ -21,16 +21,16 @@ const ProductsRow = ({ data }: { data: ProductsEntity }) => {
       </TableCell>
       <TableCell>
         <Link
-          className="text-xs hover:underline sm:text-base"
+          className="line-clamp-2 text-xs hover:underline sm:text-base"
           href={`/product/${data._id}`}
         >
           {data.name}
         </Link>
       </TableCell>
-      <TableCell>
+      <TableCell className="overflow-hidden text-ellipsis text-xs sm:text-base">
         <GetCategory id={data.category} />
       </TableCell>
-      <TableCell className="sm:flex sm:items-center sm:justify-center sm:gap-x-2">
+      <TableCell className="gap-y-2 text-xs sm:flex sm:items-center sm:justify-center sm:gap-x-2 sm:gap-y-0 sm:text-sm md:text-base">
         <EditProductDialog id={data._id} />
         <DeleteModal id={data._id} />
       </TableCell>

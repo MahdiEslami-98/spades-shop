@@ -36,7 +36,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
           </div>
         </div>
         <div className="grid grid-cols-1 gap-y-8 py-8 sm:px-8 lg:grid-cols-12 lg:grid-rows-1 lg:gap-x-8 lg:gap-y-0">
-          <div className="flex gap-x-4 rounded-xl border p-4 sm:gap-x-8 md:gap-x-24 lg:col-span-3 lg:block lg:gap-x-0 xl:col-span-2">
+          <div className="flex max-h-96 gap-x-4 rounded-xl border p-4 sm:gap-x-8 md:gap-x-24 lg:col-span-3 lg:block lg:gap-x-0 xl:col-span-2">
             {tabs.map((item, index) => (
               <Link
                 key={index}

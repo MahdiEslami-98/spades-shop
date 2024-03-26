@@ -33,7 +33,7 @@ const ProductsTable = () => {
         </div>
       </div>
       <div className="mb-2 mt-8 rounded-md border">
-        <Table className="table-auto border-collapse">
+        <Table className="table-fixed border-collapse">
           <TableHeader>
             <ProductsHead />
           </TableHeader>
