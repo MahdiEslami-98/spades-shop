@@ -23,7 +23,7 @@ const Category = ({ category }: { category: ICategory }) => {
                 alt={item.slugname}
                 className="w-12 rounded-xl md:w-20"
               />
-              <p className="flex items-center gap-x-2 font-medium md:text-lg">
+              <p className="flex items-center gap-x-2 whitespace-nowrap font-medium md:text-lg">
                 {category.data.categories[i].name}
               </p>
             </Link>

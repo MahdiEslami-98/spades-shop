@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { FaRocket } from "react-icons/fa6";
 
-const CategoryItem = ({item} :{item : ProductsEntity}) => {
+const CategoryItem = ({ item }: { item: ProductsEntity }) => {
   return (
     <>
       <Link

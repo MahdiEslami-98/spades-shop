@@ -4,7 +4,6 @@ import Button from "@/components/button";
 import { useQuery } from "@tanstack/react-query";
 import React, {
   ChangeEventHandler,
-  FocusEventHandler,
   MouseEventHandler,
   useRef,
   useState,
@@ -17,9 +16,17 @@ import Link from "next/link";
 import Input from "@/components/input";
 import { useDebouncedCallback } from "use-debounce";
 import SkeletonPicture from "@/utils/icons/skeletonPicture";
+import { useCartActions } from "@/store/cart-store";
+import { IProduct } from "@/types/getProductByIdRes";
+import { useToast } from "@/components/ui/use-toast";
 
 const ProductPage = ({ params }: { params: { id: string } }) => {
   const [quantity, setQuantity] = useState(1);
+
+  const { toast } = useToast();
+
+  const { addToCart } = useCartActions();
+
   const paragraph = useRef<HTMLParagraphElement>(null);
   const { data, isSuccess, isLoading, isError } = useQuery({
     queryKey: ["product", params.id],
@@ -37,7 +44,7 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
     if (Number(value) > data?.data.product.quantity!) {
       setQuantity(data?.data.product.quantity!);
     }
-  }, 700);
+  }, 300);
 
   const moreTextHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
     const btn = e.target as HTMLButtonElement;
@@ -53,6 +60,13 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
   const quantityChangeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
     setQuantity(Number(e.target.value));
     debounce(Number(e.target.value));
+  };
+
+  const addToCartHandler = (p: IProduct, q: number) => {
+    addToCart(p, q);
+    toast({
+      title: "✅محصول به سبد خرید اضافه شد",
+    });
   };
 
   return (
@@ -97,10 +111,12 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
                   تومان
                 </p>
-                <form className="flex flex-row-reverse items-center gap-x-2 pt-2">
+                <div className="flex flex-row-reverse items-center gap-x-2 pt-2">
                   <Button
                     className="rounded-md bg-black px-4 py-2 text-white"
-                    disabled
+                    onClick={() =>
+                      addToCartHandler(data.data.product, quantity)
+                    }
                   >
                     افزودن به سبد خرید
                   </Button>
@@ -116,7 +132,7 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
                       value={quantity}
                     />
                   </div>
-                </form>
+                </div>
               </div>
             </div>
           </div>
