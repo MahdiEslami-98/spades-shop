@@ -5,15 +5,16 @@ import Button from "@/components/button";
 import { useCart, useCartActions } from "@/store/cart-store";
 import { FaRegTrashCan } from "react-icons/fa6";
 import Link from "next/link";
+import sumProductPricesInCart from "@/utils/sumProductPricesInCart";
 
 const CartPage = () => {
   const cart = useCart();
   const { incrementQuantity, decrementQuantity, removeFromCart, clearCart } =
     useCartActions();
   return (
-    <div className="container mx-auto h-4/5 p-4">
+    <div className="container mx-auto h-4/5 px-6 py-4">
       <div className="grid grid-cols-12 gap-x-6 pb-4">
-        <div className="col-span-12 rounded-md border border-black p-4 md:col-span-8">
+        <div className="col-span-12 mb-20 rounded-md border border-black p-4 md:col-span-8 md:mb-0">
           <div className="flex items-center justify-between pb-2">
             <div>
               <p className="font-medium">سبد خرید شما</p>
@@ -49,24 +50,24 @@ const CartPage = () => {
             cart.map((item) => (
               <div
                 key={item._id}
-                className="flex border-t border-black px-2 py-3 text-sm lg:text-base"
+                className="flex border-t border-black py-3 text-sm md:px-2 lg:text-base"
               >
                 <div className="flex items-center">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={process.env.PRODUCT_THUMB + item.thumbnail}
                     alt={item.name}
-                    className="max-w-32"
+                    className="w-16 sm:w-20 md:w-32"
                   />
                 </div>
-                <div className="flex w-full flex-col gap-y-2 overflow-hidden">
+                <div className="flex w-full flex-col gap-y-2">
                   <Link
                     href={`/product/${item._id}`}
-                    className="mt-2 inline-block text-ellipsis whitespace-nowrap hover:underline"
+                    className="mt-2 line-clamp-2 inline-block h-10 hover:underline sm:h-fit"
                   >
                     {item.name}
                   </Link>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-x-6">
                     <p>قیمت:</p>
                     <p className="font-medium">
                       {(item.price * item.cartQuantity)
@@ -122,33 +123,27 @@ const CartPage = () => {
               </div>
             ))}
         </div>
-        <div className="fixed bottom-0 left-0 right-0 col-span-4 max-h-[130px] border border-black p-4 md:sticky md:top-12 md:rounded-md md:p-4">
-          <div className="flex items-center justify-between md:block">
+        <div className="fixed bottom-0 left-0 right-0 col-span-4 md:sticky md:top-12">
+          <div className="shadow- flex items-center justify-between border-t border-black bg-white p-4 shadow-med md:block md:rounded-md md:border md:p-6 md:shadow-none">
             <div className="flex flex-col items-center md:flex-row md:justify-between">
               <p className="text-sm font-medium text-gray-500">
                 مبلغ قابل پرداخت
               </p>
               <p className="text-sm md:text-base">
-                {cart
-                  .reduce(
-                    (total, item) => item.price * item.cartQuantity + total,
-                    0,
-                  )
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                {sumProductPricesInCart(cart)}
                 <span className="pr-2">تومان</span>
               </p>
             </div>
-            <div className="md:pt-4">
-              {cart.length > 0 && (
+            {cart.length > 0 && (
+              <div className="md:pt-4">
                 <Link
                   href={"/cart/checkout"}
                   className="inline-block rounded-md bg-black px-4 py-2 text-center text-white md:w-full"
                 >
                   تایید و پرداخت
                 </Link>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

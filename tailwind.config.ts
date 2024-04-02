@@ -39,6 +39,9 @@ const config = {
       dropShadow: {
         base: "0 1px 5px rgba(0, 0, 0, 0.2)",
       },
+      boxShadow: {
+        med: "1px 3px 8px rgba(0, 0, 0, 0.24)"
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
