@@ -17,7 +17,7 @@ const CategoryContainer = ({
 }) => {
   return (
     <>
-      <div className="border-b border-black py-4">
+      <div className="border-b border-black px-1 py-4 text-xs sm:text-sm md:text-base">
         <div className="flex items-center justify-between px-4">
           <div className="flex items-center gap-x-2 px-1">
             <figure>
@@ -38,8 +38,10 @@ const CategoryContainer = ({
             <span>مشاهده همه</span> <FaAngleLeft />
           </Link>
         </div>
-        <div className="grid grid-cols-12 gap-x-10 gap-y-12 py-4 sm:px-0">
-          {data.data.products?.map((item) => <CategoryItem key={item._id} item={item}/>)}
+        <div className="grid grid-cols-12 justify-center justify-items-center gap-x-10 gap-y-6 py-4 sm:gap-y-12 sm:px-0">
+          {data.data.products?.map((item) => (
+            <CategoryItem key={item._id} item={item} />
+          ))}
         </div>
       </div>
     </>

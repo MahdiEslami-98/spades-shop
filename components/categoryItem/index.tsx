@@ -8,7 +8,7 @@ const CategoryItem = ({ item }: { item: ProductsEntity }) => {
     <>
       <Link
         href={"/product/" + item._id}
-        className="col-span-12 overflow-hidden rounded-xl border shadow-md sm:col-span-6  lg:col-span-4"
+        className="col-span-12 max-w-80 overflow-hidden rounded-xl border shadow-med sm:col-span-6 sm:max-w-full lg:col-span-4"
         key={item._id}
       >
         <div className="w-full">
@@ -19,11 +19,9 @@ const CategoryItem = ({ item }: { item: ProductsEntity }) => {
             className="w-full object-cover object-center"
           />
         </div>
-        <div className="grid grid-cols-1 grid-rows-3 gap-y-4 px-8 py-6">
+        <div className="grid grid-cols-1 gap-y-4 px-8 py-6">
           <p className="text-lg font-medium capitalize">{item.brand}</p>
-          <p className="overflow-hidden text-ellipsis text-nowrap font-medium">
-            {item.name}
-          </p>
+          <p className="line-clamp-2 h-8 font-medium sm:h-12">{item.name}</p>
           <div className="flex items-center justify-between">
             <p>قیمت</p>
             <p className="text-left">
