@@ -140,7 +140,7 @@ const CartPage = () => {
                   href={"/cart/checkout"}
                   className="inline-block rounded-md bg-black px-4 py-2 text-center text-white md:w-full"
                 >
-                  تایید و پرداخت
+                  نهایی کردن سبد خرید
                 </Link>
               </div>
             )}

@@ -24,6 +24,7 @@ const OrderTable = () => {
   const { data, isLoading, isSuccess } = useQuery({
     queryKey: ["orders", stat, page],
     queryFn: () => getOrders(stat, page),
+    gcTime: 0,
   });
   const orderStatusChangeHandler = (e: React.ChangeEvent<HTMLFormElement>) => {
     setStat(e.target.value);
@@ -60,7 +61,7 @@ const OrderTable = () => {
         </form>
       </div>
       <div className="mb-2 mt-8 rounded-md border">
-        <Table className="table-auto border-collapse">
+        <Table className="table-auto border-collapse text-xs sm:text-sm md:text-base">
           <TableHeader>
             <Head />
           </TableHeader>
@@ -73,7 +74,7 @@ const OrderTable = () => {
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TableCell colSpan={4}>
+              <TableCell colSpan={5}>
                 {isSuccess && data?.page && data.total_pages && (
                   <OrdersPagination p={data?.page} total={data?.total_pages} />
                 )}

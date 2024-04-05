@@ -3,17 +3,23 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { IOrdersEntity } from "@/types/getOrdersRes";
 import React from "react";
 import UserOrder from "../user";
+import OrderModal from "@/components/orderModal";
 
 const Row = ({ data }: { data: IOrdersEntity }) => {
   return (
     <TableRow>
-      <TableCell>
+      <TableCell className="px-1 text-right">
         <UserOrder id={data.user} />
       </TableCell>
-      <TableCell>{data.totalPrice}</TableCell>
-      <TableCell>{new Date(data.createdAt).toLocaleDateString()}</TableCell>
-      <TableCell className="flex justify-center">
-        <Button className="underline">بررسی سفارش</Button>
+      <TableCell className="px-1 text-right">{data.totalPrice}</TableCell>
+      <TableCell className="px-1 text-right">
+        {new Date(data.createdAt).toLocaleDateString("fa-IR")}
+      </TableCell>
+      <TableCell className="px-1">
+        {data.deliveryStatus ? "تحویل شده" : "در انتظار"}
+      </TableCell>
+      <TableCell className="px-1 text-center">
+        <OrderModal id={data._id} />
       </TableCell>
     </TableRow>
   );
