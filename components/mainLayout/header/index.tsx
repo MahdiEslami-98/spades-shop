@@ -3,11 +3,15 @@ import Link from "next/link";
 import React from "react";
 import { FaCartShopping, FaUserGear } from "react-icons/fa6";
 import CartBadge from "./cartBadge";
+import Navbar from "./navbar";
+import getAllCategory from "@/api/getAllCategory";
+import { ICategory } from "@/types/getAllCategoryRes";
 
-const Header = () => {
+const Header = async () => {
+  const cat = await getAllCategory();
   return (
-    <header className="border-b border-black">
-      <nav className="container mx-auto px-4 sm:px-6 lg:px-8" aria-label="Top">
+    <header className="">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8" aria-label="Top">
         <div className="grid w-full grid-cols-2 items-center  py-2">
           <div className="flex items-center ">
             <Link href={"/"}>
@@ -40,7 +44,8 @@ const Header = () => {
             </Link>
           </div>
         </div>
-      </nav>
+      </div>
+      <Navbar data={cat} />
     </header>
   );
 };

@@ -16,7 +16,7 @@ import Link from "next/link";
 import Input from "@/components/input";
 import { useDebouncedCallback } from "use-debounce";
 import SkeletonPicture from "@/utils/icons/skeletonPicture";
-import { useCartActions } from "@/store/cart-store";
+import { useCart, useCartActions } from "@/store/cart-store";
 import { IProduct } from "@/types/getProductByIdRes";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -25,7 +25,15 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
 
   const { toast } = useToast();
 
+  const cart = useCart();
+
   const { addToCart } = useCartActions();
+
+  const findProduct = () => {
+    return cart.find((item) => item._id === params.id);
+  };
+
+  const product = findProduct();
 
   const paragraph = useRef<HTMLParagraphElement>(null);
   const { data, isSuccess, isLoading, isError } = useQuery({
@@ -36,15 +44,6 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
   if (isSuccess) {
     document.title = data?.data.product.name!;
   }
-
-  const debounce = useDebouncedCallback((value) => {
-    if (Number(value) < 1) {
-      setQuantity(1);
-    }
-    if (Number(value) > data?.data.product.quantity!) {
-      setQuantity(data?.data.product.quantity!);
-    }
-  }, 300);
 
   const moreTextHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
     const btn = e.target as HTMLButtonElement;
@@ -59,10 +58,22 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
 
   const quantityChangeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
     setQuantity(Number(e.target.value));
-    debounce(Number(e.target.value));
+    if (Number(e.target.value) < 1) {
+      setQuantity(1);
+    }
+    if (Number(e.target.value) > data?.data.product.quantity!) {
+      setQuantity(data?.data.product.quantity!);
+    }
   };
 
   const addToCartHandler = (p: IProduct, q: number) => {
+    if (p.quantity < q + (product?.cartQuantity || 0)) {
+      toast({
+        title: "موجودی کافی نیست",
+        variant: "destructive",
+      });
+      return;
+    }
     addToCart(p, q);
     toast({
       title: "✅محصول به سبد خرید اضافه شد",
@@ -111,7 +122,7 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
                   تومان
                 </p>
-                <div className="flex flex-row-reverse items-center gap-x-2 pt-2">
+                <div className="flex flex-row-reverse items-center gap-x-4 pt-2">
                   <Button
                     className="rounded-md bg-black px-4 py-2 text-white"
                     onClick={() =>
@@ -120,10 +131,16 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
                   >
                     افزودن به سبد خرید
                   </Button>
-                  <div className="flex items-end gap-x-2">
-                    <label htmlFor="quantity" className="font-medium">
-                      تعداد:
-                    </label>
+                  <div className="flex items-end gap-x-1">
+                    <Button
+                      className="rounded bg-black px-2 py-1 text-white"
+                      onClick={() =>
+                        quantity < data.data.product.quantity &&
+                        setQuantity(quantity + 1)
+                      }
+                    >
+                      +
+                    </Button>
                     <Input
                       onChange={(e) => quantityChangeHandler(e)}
                       id="quantity"
@@ -131,6 +148,12 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
                       className="w-16 rounded-md border border-black px-2 py-1 text-center focus:shadow-gray-500 focus:ring-1 focus:ring-gray-500"
                       value={quantity}
                     />
+                    <Button
+                      className="rounded bg-black px-2 py-1 text-white"
+                      onClick={() => quantity > 1 && setQuantity(quantity - 1)}
+                    >
+                      -
+                    </Button>
                   </div>
                 </div>
               </div>

@@ -10,7 +10,7 @@ import "swiper/css/pagination";
 const Slider = ({ className }: { className?: string }) => {
   return (
     <Swiper
-      className={className + " left-to-right w-full rounded-lg"}
+      className={className + " left-to-right -z-10 w-full rounded-lg"}
       modules={[Navigation, Pagination, A11y, Autoplay]}
       spaceBetween={10}
       slidesPerView={1}
