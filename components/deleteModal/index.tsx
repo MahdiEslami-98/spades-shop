@@ -18,12 +18,13 @@ import deleteProductById from "@/api/deleteProductById";
 import { useToast } from "../ui/use-toast";
 import { queryClient } from "@/lib/raectQuery";
 
-const DeleteModal = ({ id }: { id: string }) => {
+const DeleteModal = ({ id, name }: { id: string; name: string }) => {
   const { toast } = useToast();
   const { mutate: deleteMutate } = useMutation({
     mutationFn: (value: string) => deleteProductById(value),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["mProducts"] });
+      queryClient.invalidateQueries({ queryKey: ["prices"] });
       toast({
         title: "✅محصول با موفقیت حذف شد",
       });
@@ -46,10 +47,10 @@ const DeleteModal = ({ id }: { id: string }) => {
             آیا مطمئن هستید؟
           </AlertDialogTitle>
           <AlertDialogDescription className="text-right">
-            این عملیات غیرقابل بازگشت است
+            {name} به طور کامل حذف خواهد شد
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <AlertDialogFooter className="flex gap-x-2">
           <AlertDialogCancel>انصراف</AlertDialogCancel>
           <AlertDialogAction>
             <Button onClick={() => deleteMutate(id)}>حذف</Button>

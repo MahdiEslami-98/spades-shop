@@ -10,8 +10,14 @@ import React, {
   MouseEventHandler,
   RefObject,
   SetStateAction,
+  useEffect,
   useRef,
+  useState,
 } from "react";
+
+const findMain = (data: IEditProductPriceAndQuantityData[], id: string) => {
+  return data.find((item) => item.id === id);
+};
 
 const PricesRow = ({
   data,
@@ -24,47 +30,42 @@ const PricesRow = ({
   get: IEditProductPriceAndQuantityData[];
   pend: boolean;
 }) => {
+  const [showInput, setShowInput] = useState({ price: false, quantity: false });
+  const [showBtn, setShowBtn] = useState({ price: true, quantity: true });
+  const [showError, setShowError] = useState({ price: false, quantity: false });
+  const [isChange, setIsChange] = useState({ price: false, quantity: false });
   const priceInput = useRef() as RefObject<HTMLInputElement>;
   const quantityInput = useRef() as RefObject<HTMLInputElement>;
   const priceBtn = useRef() as RefObject<HTMLButtonElement>;
   const quantityBtn = useRef() as RefObject<HTMLButtonElement>;
 
-  if (pend) {
-    priceInput.current?.classList.add("hidden");
-    quantityInput.current?.classList.add("hidden");
-    priceBtn.current?.classList.remove("hidden");
-    quantityBtn.current?.classList.remove("hidden");
-  }
-
-  const priceChangeToInput: MouseEventHandler = (e) => {
-    e.currentTarget.classList.add("hidden");
-    if (!priceInput.current) return;
-    priceInput.current.classList.remove("hidden");
-    priceInput.current.focus();
+  const priceChangeToInput: MouseEventHandler = () => {
+    setShowInput((prev) => ({ ...prev, price: true }));
+    setShowBtn((prev) => ({ ...prev, price: false }));
+    priceInput.current?.focus();
   };
 
-  const quantityChangeToInput: MouseEventHandler = (e) => {
-    e.currentTarget.classList.add("hidden");
-    if (!quantityInput.current) return;
-    quantityInput.current.classList.remove("hidden");
-    quantityInput.current.focus();
+  const quantityChangeToInput: MouseEventHandler = () => {
+    setShowInput((prev) => ({ ...prev, quantity: true }));
+    setShowBtn((prev) => ({ ...prev, quantity: false }));
+    quantityInput.current?.focus();
   };
 
   const priceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (!value || +value.length < 5) {
-      priceInput.current?.classList.add("bg-red-100");
+      setShowError((prev) => ({ ...prev, price: true }));
       if (get.length === 0) return;
       set((prev: IEditProductPriceAndQuantityData[]) => {
-        const main = prev.find((item) => item.id === data._id);
+        const main = findMain(prev, data._id);
         if (main) {
           return [...prev.filter((item) => item.id !== data._id)];
         }
       });
     } else {
-      priceInput.current?.classList.remove("bg-red-100");
+      setShowError((prev) => ({ ...prev, price: false }));
       set((prev: IEditProductPriceAndQuantityData[]) => {
-        const main = prev.find((item) => item.id === data._id);
+        const main = findMain(prev, data._id);
         if (!main) {
           return [...prev, { id: data._id, price: value }];
         } else if (main) {
@@ -79,7 +80,7 @@ const PricesRow = ({
   const quantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (!value || +value < 0) {
-      quantityInput.current?.classList.add("bg-red-100");
+      setShowError((prev) => ({ ...prev, quantity: true }));
       if (get.length === 0) return;
       set((prev: IEditProductPriceAndQuantityData[]) => {
         const main = prev.find((item) => item.id === data._id);
@@ -88,7 +89,7 @@ const PricesRow = ({
         }
       });
     } else {
-      quantityInput.current?.classList.remove("bg-red-100");
+      setShowError((prev) => ({ ...prev, quantity: false }));
       set((prev: IEditProductPriceAndQuantityData[]) => {
         const main = prev.find((item) => item.id === data._id);
         if (!main) {
@@ -105,20 +106,36 @@ const PricesRow = ({
 
   const cancelQuantityInput: KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === "Escape") {
-      quantityInput.current?.classList.add("hidden");
-      quantityBtn.current?.classList.remove("hidden");
+      setShowInput((prev) => ({ ...prev, quantity: false }));
+      setShowBtn((prev) => ({ ...prev, quantity: true }));
+      setShowError((prev) => ({ ...prev, quantity: false }));
       e.currentTarget.value = data.quantity.toString();
     }
   };
 
   const cancelPriceInput: KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === "Escape") {
-      priceBtn.current?.classList.remove("hidden");
-      e.currentTarget.classList.add("hidden");
-      e.currentTarget.classList.remove("bg-red-100");
+      setShowBtn((prev) => ({ ...prev, price: true }));
+      setShowInput((prev) => ({ ...prev, price: false }));
+      setShowError((prev) => ({ ...prev, price: false }));
       e.currentTarget.value = data.price.toString();
     }
   };
+
+  useEffect(() => {
+    const main = findMain(get, data._id);
+    if (main) {
+      main.price && setIsChange((prev) => ({ ...prev, price: true }));
+      main.quantity && setIsChange((prev) => ({ ...prev, quantity: true }));
+    } else {
+      setIsChange({ price: false, quantity: false });
+    }
+  }, [get]);
+
+  useEffect(() => {
+    setShowInput({ price: false, quantity: false });
+    setShowBtn({ price: true, quantity: true });
+  }, [pend]);
 
   return (
     <TableRow>
@@ -130,8 +147,8 @@ const PricesRow = ({
       <TableCell>
         <Button
           ref={priceBtn}
-          className="pl-4"
-          onClick={(e) => priceChangeToInput(e)}
+          className={`rounded-md pl-4 ${showBtn.price ? "" : "hidden"} ${isChange.price && "bg-green-100"} ${showError.price && "bg-red-100"}`}
+          onClick={priceChangeToInput}
         >
           {data.price}
         </Button>
@@ -140,15 +157,16 @@ const PricesRow = ({
           ref={priceInput}
           onKeyDown={(e) => cancelPriceInput(e)}
           type="number"
-          className="hidden w-28 rounded-md border border-black px-3"
+          className={`w-28 rounded-md border border-black px-3
+            ${showInput.price ? "" : " hidden"} ${isChange.price && "bg-green-100"} ${showError.price && "bg-red-100"}`}
           defaultValue={data.price}
         />
       </TableCell>
       <TableCell>
         <Button
           ref={quantityBtn}
-          className="pl-6"
-          onClick={(e) => quantityChangeToInput(e)}
+          className={`rounded-md pl-6 ${showBtn.quantity ? "" : "hidden"} ${isChange.quantity && "bg-green-100"} ${showError.quantity && "bg-red-100"}`}
+          onClick={quantityChangeToInput}
         >
           {data.quantity}
         </Button>
@@ -157,7 +175,7 @@ const PricesRow = ({
           onKeyDown={(e) => cancelQuantityInput(e)}
           ref={quantityInput}
           type="number"
-          className="hidden w-20 rounded-md border border-black px-3"
+          className={`w-20 rounded-md border border-black px-3 ${showInput.quantity ? "" : "hidden"} ${isChange.quantity && "bg-green-100"} ${showError.quantity && "bg-red-100"}`}
           defaultValue={data.quantity}
         />
       </TableCell>

@@ -35,9 +35,6 @@ const LoginForm = () => {
       if (data.status === "success") {
         const token = data.token;
         const user = data?.data.user;
-        sessionStorage.setItem("access_token", token.accessToken);
-        sessionStorage.setItem("refresh_token", token.refreshToken);
-        sessionStorage.setItem("user_role", user.role);
         localStorage.setItem("user_info", JSON.stringify(user));
         Cookies.set("access_token", token.accessToken);
         Cookies.set("refresh_token", token.refreshToken);
@@ -66,8 +63,8 @@ const LoginForm = () => {
 
   useEffect(() => {
     document.title = "ورود به حساب کاربری";
-    const token = sessionStorage.getItem("refresh_token");
-    const userRole = sessionStorage.getItem("user_role");
+    const token = Cookies.get("refresh_token");
+    const userRole = Cookies.get("user_role");
     if (token && userRole === "ADMIN") {
       getAccessToken(token).then((res) => {
         if (res?.status === "success") {

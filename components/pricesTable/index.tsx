@@ -26,6 +26,7 @@ const PricesTable = () => {
   const [productsInfo, setProductInfo] = useState<
     IEditProductPriceAndQuantityData[] | []
   >([]);
+  const [pend, setPend] = useState(false);
 
   const { data, isSuccess, isLoading } = useQuery({
     queryKey: ["prices", page],
@@ -36,7 +37,9 @@ const PricesTable = () => {
     mutationFn: (value: IEditProductPriceAndQuantityData[]) =>
       editProductPriceAndQuantity(value),
     onSuccess: () => {
+      setPend((prev) => !prev);
       queryClient.invalidateQueries({ queryKey: ["prices"] });
+      setProductInfo([]);
       toast({
         title: "✅محصول با موفقیت ویرایش شد",
       });
@@ -64,12 +67,21 @@ const PricesTable = () => {
         <div>
           <p className="text-xl md:text-2xl">موجودی و قیمت ها</p>
         </div>
-        <div className="">
+        <div className=" flex items-center gap-x-2">
           <Button
             onClick={saveHandler}
             className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white"
           >
             ذخیره
+          </Button>
+          <Button
+            className="rounded-md border border-black px-4 py-2 text-sm font-medium"
+            onClick={() => {
+              setProductInfo([]);
+              setPend((prev) => !prev);
+            }}
+          >
+            لغو
           </Button>
         </div>
       </div>
@@ -87,7 +99,7 @@ const PricesTable = () => {
                   data={item}
                   set={setProductInfo}
                   get={productsInfo}
-                  pend={isPending}
+                  pend={pend}
                 />
               ))}
           </TableBody>

@@ -6,6 +6,7 @@ import { useCart, useCartActions } from "@/store/cart-store";
 import { FaRegTrashCan } from "react-icons/fa6";
 import Link from "next/link";
 import sumProductPricesInCart from "@/utils/sumProductPricesInCart";
+import numberTo3Digit from "@/utils/numberSeperateWith3Digit";
 
 const CartPage = () => {
   const cart = useCart();
@@ -70,9 +71,7 @@ const CartPage = () => {
                   <div className="flex items-center gap-x-6">
                     <p>قیمت:</p>
                     <p className="font-medium">
-                      {(item.price * item.cartQuantity)
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      {numberTo3Digit(item.price * item.cartQuantity)}
                     </p>
                   </div>
                   <div className="flex items-center justify-between">
@@ -130,7 +129,7 @@ const CartPage = () => {
                 مبلغ قابل پرداخت
               </p>
               <p className="text-sm md:text-base">
-                {sumProductPricesInCart(cart)}
+                {numberTo3Digit(sumProductPricesInCart(cart))}
                 <span className="pr-2">تومان</span>
               </p>
             </div>

@@ -4,6 +4,8 @@ import { IOrdersEntity } from "@/types/getOrdersRes";
 import React from "react";
 import UserOrder from "../user";
 import OrderModal from "@/components/orderModal";
+import { number } from "zod";
+import numberTo3Digit from "@/utils/numberSeperateWith3Digit";
 
 const Row = ({ data }: { data: IOrdersEntity }) => {
   return (
@@ -11,7 +13,9 @@ const Row = ({ data }: { data: IOrdersEntity }) => {
       <TableCell className="px-1 text-right">
         <UserOrder id={data.user} />
       </TableCell>
-      <TableCell className="px-1 text-right">{data.totalPrice}</TableCell>
+      <TableCell className="px-1 text-right">
+        {numberTo3Digit(data.totalPrice)}
+      </TableCell>
       <TableCell className="px-1 text-right">
         {new Date(data.createdAt).toLocaleDateString("fa-IR")}
       </TableCell>

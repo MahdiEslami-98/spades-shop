@@ -42,7 +42,7 @@ const ResultPage = () => {
           <FaX className="text-7xl text-red-500 md:text-9xl" />
         </div>
         <p className="w-1/2 text-lg font-bold md:text-xl lg:w-1/3">
-          پرداخت ناموفق بود. لطفا مجددا تلاش کنید. سفارش شما با موفقیت ثبت نشد
+          پرداخت ناموفق بود. لطفا مجددا تلاش کنید. سفارش شما ثبت نشد
         </p>
       </div>
     </div>

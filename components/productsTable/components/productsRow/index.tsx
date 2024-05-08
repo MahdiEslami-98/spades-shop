@@ -32,7 +32,7 @@ const ProductsRow = ({ data }: { data: ProductsEntity }) => {
       </TableCell>
       <TableCell className="gap-y-2 text-xs sm:flex sm:items-center sm:justify-center sm:gap-x-2 sm:gap-y-0 sm:text-sm md:text-base">
         <EditProductDialog id={data._id} />
-        <DeleteModal id={data._id} />
+        <DeleteModal id={data._id} name={data.name} />
       </TableCell>
     </TableRow>
   );

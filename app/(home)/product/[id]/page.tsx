@@ -19,6 +19,7 @@ import SkeletonPicture from "@/utils/icons/skeletonPicture";
 import { useCart, useCartActions } from "@/store/cart-store";
 import { IProduct } from "@/types/getProductByIdRes";
 import { useToast } from "@/components/ui/use-toast";
+import numberTo3Digit from "@/utils/numberSeperateWith3Digit";
 
 const ProductPage = ({ params }: { params: { id: string } }) => {
   const [quantity, setQuantity] = useState(1);
@@ -117,9 +118,7 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
               </div>
               <div className="self-end pl-4">
                 <p className="text-left text-xl font-bold">
-                  {data.data.product.price
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                  {numberTo3Digit(data.data.product.price)}
                   تومان
                 </p>
                 <div className="flex flex-row-reverse items-center gap-x-4 pt-2">
@@ -131,9 +130,9 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
                   >
                     افزودن به سبد خرید
                   </Button>
-                  <div className="flex items-end gap-x-1">
+                  <div className="flex items-end gap-x-1 overflow-hidden rounded-md border border-black">
                     <Button
-                      className="rounded bg-black px-2 py-1 text-white"
+                      className="bg-black px-2 py-1 text-white"
                       onClick={() =>
                         quantity < data.data.product.quantity &&
                         setQuantity(quantity + 1)
@@ -145,11 +144,11 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
                       onChange={(e) => quantityChangeHandler(e)}
                       id="quantity"
                       type="number"
-                      className="w-16 rounded-md border border-black px-2 py-1 text-center focus:shadow-gray-500 focus:ring-1 focus:ring-gray-500"
+                      className="w-10 rounded-md px-2 py-1 text-center outline-0"
                       value={quantity}
                     />
                     <Button
-                      className="rounded bg-black px-2 py-1 text-white"
+                      className="bg-black px-2 py-1 text-white"
                       onClick={() => quantity > 1 && setQuantity(quantity - 1)}
                     >
                       -

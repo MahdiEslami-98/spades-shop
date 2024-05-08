@@ -176,7 +176,7 @@ const CheckoutPage = () => {
           <div className="rounded-md border border-black p-4">
             <div className="flex justify-between">
               <p>قیمت محصولات :</p>
-              <p>{sumProductPricesInCart(cart)}</p>
+              <p>{numberTo3Digit(sumProductPricesInCart(cart))}</p>
             </div>
             <div className="flex justify-between">
               <p>هزینه ارسال :</p>
@@ -187,9 +187,7 @@ const CheckoutPage = () => {
               <p>قابل پرداخت :</p>
               {cart.length > 0 ? (
                 <p>
-                  {numberTo3Digit(
-                    cart.reduce((a, b) => a + b.price, 0) + shippingCost,
-                  )}
+                  {numberTo3Digit(sumProductPricesInCart(cart) + shippingCost)}
                 </p>
               ) : (
                 <p>0</p>

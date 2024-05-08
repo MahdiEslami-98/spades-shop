@@ -50,6 +50,7 @@ const AddProductDialog = () => {
     mutationFn: (value: FormData) => addProduct(value),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["mProducts"] });
+      queryClient.invalidateQueries({ queryKey: ["prices"] });
       toast({
         title: "✅محصول با موفقیت اضافه شد",
       });
@@ -188,15 +189,15 @@ const AddProductDialog = () => {
                 name="images"
                 control={control}
                 render={({ field }) => (
-                  <input
+                  <Input
                     multiple
                     type="file"
                     id="image"
+                    className="overflow-hidden rounded-md border border-black text-slate-500 file:ml-4 file:border-0 file:bg-black file:px-3 file:py-1 file:font-medium file:text-white hover:file:bg-gray-800"
                     onChange={(e) => {
                       const file = Array.from(e.target.files || []);
                       field.onChange(file);
                     }}
-                    className="overflow-hidden rounded-md border border-black"
                   />
                 )}
               />
@@ -210,10 +211,10 @@ const AddProductDialog = () => {
                 name="thumbnail"
                 control={control}
                 render={({ field }) => (
-                  <input
+                  <Input
                     type="file"
                     id="thumbnail"
-                    className="overflow-hidden rounded-md border border-black"
+                    className="overflow-hidden rounded-md border border-black text-slate-500 file:ml-4 file:border-0 file:bg-black file:px-3 file:py-1 file:font-medium file:text-white hover:file:bg-gray-800"
                     onChange={(e) => {
                       const file = Array.from(e.target.files || []);
                       field.onChange(file[0]);
