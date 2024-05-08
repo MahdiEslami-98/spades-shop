@@ -1,10 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    BASE_URL: "http://localhost:8000/api",
-    PRODUCT_IMG: "http://localhost:8000/images/products/images/",
-    PRODUCT_THUMB: "http://localhost:8000/images/products/thumbnails/",
-    CATEGORY_ICON: "http://localhost:8000/images/categories/icons/",
+    BASE_URL: "https://online-shop-backend-y1lp.onrender.com/api",
+    PRODUCT_IMG:
+      "https://online-shop-backend-y1lp.onrender.com/images/products/images/",
+    PRODUCT_THUMB:
+      "https://online-shop-backend-y1lp.onrender.com/images/products/thumbnails/",
+    CATEGORY_ICON:
+      "https://online-shop-backend-y1lp.onrender.com/images/categories/icons/",
   },
 };
 
