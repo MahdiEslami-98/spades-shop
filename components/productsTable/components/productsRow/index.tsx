@@ -12,9 +12,7 @@ const ProductsRow = ({ data }: { data: ProductsEntity }) => {
       <TableCell>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={
-            "http://localhost:8000/images/products/thumbnails/" + data.thumbnail
-          }
+          src={process.env.PRODUCT_THUMB + data.thumbnail}
           alt={data.brand}
           className="w-20 object-cover object-center"
         />
