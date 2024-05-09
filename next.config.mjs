@@ -9,6 +9,9 @@ const nextConfig = {
     CATEGORY_ICON:
       "https://online-shop-backend-y1lp.onrender.com/images/categories/icons/",
   },
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
 };
 
 export default nextConfig;

@@ -147,12 +147,7 @@ const CheckoutPage = () => {
                   );
                 }}
                 calendarPosition="bottom-right"
-                mapDays={({ date, today }) => {
-                  if (date.day === today.day) {
-                    return {
-                      className: "bg-cyan-100",
-                    };
-                  }
+                mapDays={({ date }) => {
                   if (date.weekDay.index === 6) {
                     return {
                       disabled: true,
