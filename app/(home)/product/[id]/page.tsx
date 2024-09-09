@@ -21,18 +21,6 @@ import { IProduct } from "@/types/getProductByIdRes";
 import { useToast } from "@/components/ui/use-toast";
 import numberTo3Digit from "@/utils/numberSeperateWith3Digit";
 
-export const getServerSideProps = async ({
-  params,
-}: {
-  params: { id: string };
-}) => {
-  return {
-    props: {
-      params,
-    },
-  };
-};
-
 const ProductPage = ({ params }: { params: { id: string } }) => {
   const [quantity, setQuantity] = useState(1);
 
