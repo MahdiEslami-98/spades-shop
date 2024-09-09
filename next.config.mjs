@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  target: "serverless",
   env: {
     BASE_URL: "https://online-shop-backend-y1lp.onrender.com/api",
     PRODUCT_IMG:
