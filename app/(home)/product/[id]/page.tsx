@@ -14,7 +14,6 @@ import "swiper/css";
 import "swiper/swiper-bundle.css";
 import Link from "next/link";
 import Input from "@/components/input";
-import { useDebouncedCallback } from "use-debounce";
 import SkeletonPicture from "@/utils/icons/skeletonPicture";
 import { useCart, useCartActions } from "@/store/cart-store";
 import { IProduct } from "@/types/getProductByIdRes";
